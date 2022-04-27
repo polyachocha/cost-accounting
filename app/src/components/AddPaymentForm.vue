@@ -3,7 +3,7 @@
     <button @click="newCost()">Add New Cost +</button>
     <div class="input" v-show="showInput">
       <input placeholder="Category" v-model="category" /><br />
-      <input placeholder="Value" v-model="value" /> <br />
+      <input placeholder="Value" v-model.number="value" /> <br />
       <input placeholder="Date" v-model="date" /><br />
       <button @click="onSaveClick">Save!</button>
     </div>
@@ -12,6 +12,7 @@
 
 <script>
 export default {
+  name: "AddPaymentForm",
   data() {
     return {
       category: "",
@@ -36,7 +37,7 @@ export default {
         category: this.category,
         date: this.date || this.getCureenDate,
       };
-      this.$emit("addNewPayment", data);
+      this.$store.commmit("addDataToPaymentsList", data);
     },
     newCost() {
       if (this.showInput) {
