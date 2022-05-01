@@ -1,12 +1,13 @@
 <template>
   <div id="app" class="wrapper">
-    {{ getFPV }}
+    Total = {{ getFPV }}
     <header>
       <div class="title">My personal costs</div>
     </header>
     <main>
       <PaymentsDisplay :items="getPaymentsList" />
       <AddPaymentForm />
+      <MyPagination :cur="cur" :length="12" :n="n" @changePage="changePage" />
     </main>
   </div>
 </template>
@@ -16,36 +17,26 @@ import PaymentsDisplay from "./components/PaymentsDisplay.vue";
 import AddPaymentForm from "./components/AddPaymentForm.vue";
 import { mapMutations } from "vuex";
 import { mapGetters } from "vuex";
+import MyPagination from "./components/MyPagination.vue";
 
 export default {
   name: "App",
   components: {
     PaymentsDisplay,
     AddPaymentForm,
+    MyPagination,
   },
   data() {
-    return {};
+    return {
+      cur: 1,
+      n: 3,
+    };
   },
   methods: {
     ...mapMutations(["setPaymentsListData"]),
-    fetchData() {
-      return [
-        {
-          date: "28.03.2022",
-          category: "Food",
-          value: 169,
-        },
-        {
-          date: "29.03.2022",
-          category: "Transport",
-          value: 360,
-        },
-        {
-          date: "02.04.2022",
-          category: "Food",
-          value: 531,
-        },
-      ];
+    changePage(p) {
+      this.cur = p;
+      this.$store.dispatch("fetchData", p);
     },
   },
   computed: {
@@ -53,9 +44,15 @@ export default {
     getFPV() {
       return this.$store.getters.getFullPaymentsValue;
     },
+    currentElements() {
+      return this.getPaymentsList.slice(
+        this.n * (this.cur - 1),
+        this.n * (this.cur - 1) + this.n
+      );
+    },
   },
   created() {
-    this.setPaymentsListData(this.fetchData());
+    this.$store.dispatch("fetchData", this.cur);
   },
 };
 </script>

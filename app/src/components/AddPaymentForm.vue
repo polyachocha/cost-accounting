@@ -2,7 +2,11 @@
   <div>
     <button @click="newCost()">Add New Cost +</button>
     <div class="input" v-show="showInput">
-      <input placeholder="Category" v-model="category" /><br />
+      <select v-model="category" v-if="categoryList">
+        <option v-for="(value, idx) in categoryList" :key="idx">
+          {{ value }}
+        </option></select
+      ><br />
       <input placeholder="Value" v-model.number="value" /> <br />
       <input placeholder="Date" v-model="date" /><br />
       <button @click="onSaveClick">Save!</button>
@@ -29,6 +33,9 @@ export default {
       const y = today.getFullYear();
       return `${d}.${m}.${y}`;
     },
+    categoryList() {
+      return this.$store.getters.getCategoryList;
+    },
   },
   methods: {
     onSaveClick() {
@@ -37,16 +44,16 @@ export default {
         category: this.category,
         date: this.date || this.getCureenDate,
       };
-      this.$store.commmit("addDataToPaymentsList", data);
+      this.$store.commit("addDataToPaymentsList", data);
     },
     newCost() {
-      if (this.showInput) {
-        this.showInput = false;
-      } else {
-        this.showInput = true;
-      }
+      this.showInput = !this.showInput;
     },
   },
+  async created() {
+    await this.$store.dispatch("loadCategories");
+  },
+  mounted() {},
 };
 </script>
 
