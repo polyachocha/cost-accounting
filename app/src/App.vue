@@ -1,64 +1,59 @@
 <template>
-  <div id="app" class="wrapper">
-    Total = {{ getFPV }}
-    <header>
-      <div class="title">My personal costs</div>
-    </header>
-    <main>
-      <PaymentsDisplay :items="getPaymentsList" />
-      <AddPaymentForm />
-      <MyPagination :cur="cur" :length="12" :n="n" @changePage="changePage" />
-    </main>
+  <div id="app">
+    <nav>
+      <router-link class="link" to="/dashboard">Dashboard</router-link>
+      <router-link class="link" to="/about">About</router-link>
+      <div class="links">
+        <router-link
+          class="link-add"
+          :to="{
+            name: 'AddPaymentForm',
+            params: { section: 'payment', category: 'Food' },
+            query: { value: 200 },
+          }"
+          >Food 200</router-link
+        >
+        <router-link
+          class="link-add"
+          :to="{
+            name: 'AddPaymentForm',
+            params: { section: 'payment', category: 'Transport' },
+            query: { value: 50 },
+          }"
+          >Transport 50</router-link
+        >
+        <router-link
+          class="link-add"
+          :to="{
+            name: 'AddPaymentForm',
+            params: { section: 'payment', category: 'Entertainment' },
+            query: { value: 2000 },
+          }"
+          >Entertainment 2000</router-link
+        >
+      </div>
+    </nav>
+    <router-view />
   </div>
 </template>
 
-<script>
-import PaymentsDisplay from "./components/PaymentsDisplay.vue";
-import AddPaymentForm from "./components/AddPaymentForm.vue";
-import { mapMutations } from "vuex";
-import { mapGetters } from "vuex";
-import MyPagination from "./components/MyPagination.vue";
 
-export default {
-  name: "App",
-  components: {
-    PaymentsDisplay,
-    AddPaymentForm,
-    MyPagination,
-  },
-  data() {
-    return {
-      cur: 1,
-      n: 3,
-    };
-  },
-  methods: {
-    ...mapMutations(["setPaymentsListData"]),
-    changePage(p) {
-      this.cur = p;
-      this.$store.dispatch("fetchData", p);
-    },
-  },
-  computed: {
-    ...mapGetters(["getPaymentsList"]),
-    getFPV() {
-      return this.$store.getters.getFullPaymentsValue;
-    },
-    currentElements() {
-      return this.getPaymentsList.slice(
-        this.n * (this.cur - 1),
-        this.n * (this.cur - 1) + this.n
-      );
-    },
-  },
-  created() {
-    this.$store.dispatch("fetchData", this.cur);
-  },
-};
-</script>
 <style>
-.title {
-  font-size: 18px;
+nav {
   margin-bottom: 10px;
+}
+.link {
+  padding: 30px;
+}
+.links {
+  display: flex;
+  margin-top: 10px;
+}
+.link-add {
+  background: rgb(68, 161, 161);
+  color: white;
+  width: 140px;
+  padding: 2px;
+  border: 2px solid rgb(165, 204, 226);
 }
 </style>
