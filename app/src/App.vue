@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <nav>
-      <router-link class="link" to="/dashboard">Dashboard</router-link>
+      <router-link
+        class="link"
+        :to="{ name: 'Dashboard', params: { page: '1' } }"
+        >Dashboard</router-link
+      >
       <router-link class="link" to="/about">About</router-link>
       <div class="links">
         <router-link
@@ -34,9 +38,47 @@
       </div>
     </nav>
     <router-view />
+    <ModalWindowAddPaymentForm :settings="settings" v-if="modalShow" />
+    <transition name="fade">
+      <ContextMenu />
+    </transition>
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      modalShow: false,
+      setting: {},
+    };
+  },
+  methods: {
+    onShow(data) {
+      this.modalShow = true;
+      this.settings = data;
+      console.log(data);
+    },
+    onHide() {
+      this.settings = {};
+      this.modalShow = false;
+    },
+  },
+  mounted() {
+    this.$modal.EventBus.$on("show", this.onShow);
+    this.$modal.EventBus.$on("hide", this.onHide);
+  },
+  beforeDestroy() {
+    this.$modal.EventBus.$off("show", this.onShow);
+    this.$modal.EventBus.$off("hide", this.onHide);
+  },
+  components: {
+    ModalWindowAddPaymentForm: () =>
+      import("./components/ModalWindowAddPaymentForm.vue"),
+    ContextMenu: () => import("./components/ContextMenu.vue"),
+  },
+};
+</script>
 
 <style>
 nav {
@@ -55,5 +97,13 @@ nav {
   width: 140px;
   padding: 2px;
   border: 2px solid rgb(165, 204, 226);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: 2s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

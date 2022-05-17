@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export const localDB = {
   page1: [
     { id: 1, date: "20.03.2020", category: "Food", value: 169 },
-    { id: 2, date: "21.03.2020", category: "Navigation", value: 50 },
+    { id: 2, date: "21.03.2020", category: "Education", value: 50 },
     { id: 3, date: "22.03.2020", category: "Sport", value: 450 },
   ],
   page2: [
@@ -49,7 +49,15 @@ export default new Vuex.Store({
       state.paymentsList.push(...newUniqIdsObs)
     },
     addDataToPaymentsList(state, payload){
-      state.paymentsList.push(payload)
+      state.paymentsList.push(payload)    
+    },
+    updatePaymentsList(state,payload){
+      const a = state.paymentsList.find(el => el.id === payload.id)
+      Vue.set(state.paymentsList,state.paymentsList.indexOf(a),payload)
+    },
+    deleteDataInPaymentsList(state, payload){
+      const a = state.paymentsList.find(el => el.id === payload)
+      state.paymentsList.splice(state.paymentsList.indexOf(a),1)
     },
     setCategories (state, payload){
       state.categoryList = payload

@@ -6,7 +6,8 @@
     </header>
     <main>
       <PaymentsDisplay :items="getPaymentsList" />
-      <AddPaymentForm />
+      <button @click="openModalForm">Show</button>
+      <button @click="openModalAuthForm">Show Auth</button>
       <MyPagination :cur="cur" :length="12" :n="n" @changePage="changePage" />
     </main>
   </div>
@@ -14,7 +15,6 @@
 
 <script>
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
-import AddPaymentForm from "../components/AddPaymentForm.vue";
 import { mapMutations } from "vuex";
 import { mapGetters } from "vuex";
 import MyPagination from "../components/MyPagination.vue";
@@ -23,7 +23,6 @@ export default {
   name: "HomeView",
   components: {
     PaymentsDisplay,
-    AddPaymentForm,
     MyPagination,
   },
   data() {
@@ -37,6 +36,18 @@ export default {
     changePage(p) {
       this.cur = p;
       this.$store.dispatch("fetchData", p);
+    },
+    openModalForm() {
+      this.$modal.show("addform", {
+        title: "Add New Payment",
+        component: "AddPaymentForm",
+      });
+    },
+    openModalAuthForm() {
+      this.$modal.show("auth", {
+        title: "Auth Form",
+        component: "auth",
+      });
     },
   },
   computed: {

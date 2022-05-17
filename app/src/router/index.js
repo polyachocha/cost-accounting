@@ -1,40 +1,30 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import HomeView from '../views/HomeView.vue'
-import PageAbout from '../views/PageAbout.vue'
-import NotFound from '../views/NotFound.vue'
-import AddPaymentForm from '../components/AddPaymentForm.vue'
-
 Vue.use(Router)
 
 const router = new Router ({
     mode: "history",
     routes: [
         {
-            path: '/dashboard',
+            path: '/dashboard/:page/',
             name: 'Dashboard',
-            component: HomeView
-        },
-        {
-            path: '/dashboard/:page',
-            name: 'Dashboard',
-            component: HomeView
+            component: ()=> import(/* webpackChunkName: "PageDashboard "*/'../views/HomeView.vue'),
         },
         {
             path: '/about',
             name: 'PageAbout',
-            component: PageAbout
+            component: ()=> import(/* webpackChunkName: "PageAbout "*/'../views/PageAbout.vue'),
         },
         {
             path: '/add/:section/:category',
             name: 'AddPaymentForm',
-            component: AddPaymentForm
+            component: ()=> import(/* webpackChunkName: "AddPaymentForm "*/'../components/AddPaymentForm.vue'),
         },
         {
             path: '/notfound',
             name: 'NotFound',
-            component: NotFound
+            component: ()=> import(/* webpackChunkName: "NotFound "*/'../views/NotFound.vue'),
         },
         {
             path: '*',
