@@ -7,9 +7,9 @@ const router = new Router ({
     mode: "history",
     routes: [
         {
-            path: '/dashboard/:page/',
+            path: '/dashboard/',
             name: 'Dashboard',
-            component: ()=> import(/* webpackChunkName: "PageDashboard "*/'../views/HomeView.vue'),
+            component: ()=> import(/* webpackChunkName: "PageDashboard "*/'../views/DashboardView.vue'),
         },
         {
             path: '/about',

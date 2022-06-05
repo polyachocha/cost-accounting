@@ -1,30 +1,39 @@
 <template>
-  <div>
-    <div class="wrapper">
-      <table class="tableCount">
-        <tr>
-          <th colspan="2">#</th>
-          <th colspan="2">Date</th>
-          <th colspan="2">Category</th>
-          <th colspan="2">Value</th>
-          <th colspan="2"></th>
-        </tr>
-        <tr v-for="(item, index) in items" :key="index">
-          <td colspan="2">{{ item.id }}</td>
-          <td colspan="2">{{ item.date }}</td>
-          <td colspan="2">{{ item.category }}</td>
-          <td colspan="2">{{ item.value }}</td>
-          <td colspan="2">
-            <button @click="onContextMenuClick($event, item)">...</button>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col :cols="1">#</v-col>
+      <v-col :cols="4">Date</v-col>
+      <v-col :cols="4">Category</v-col>
+      <v-col :cols="2">Value</v-col>
+      <v-col :cols="1"></v-col>
+    </v-row>
+    <v-row v-for="(item, index) in items" :key="index">
+      <v-col :cols="1">{{ item.id }}</v-col>
+      <v-col :cols="4">{{ item.date }}</v-col>
+      <v-col :cols="4">{{ item.category }}</v-col>
+      <v-col :cols="2">{{ item.value }}</v-col>
+      <v-col :cols="1"
+        ><v-btn @click.native="onContextMenuClick($event, item)"
+          >...</v-btn
+        ></v-col
+      >
+    </v-row>
+  </v-container>
 </template>
 <script>
 export default {
   name: "PaymentsDisplay",
+  data() {
+    return {
+      headers: [
+        { text: "#", value: "#" },
+        { text: "Date", value: "Date" },
+        { text: "Category", value: "Category" },
+        { text: "Value", value: "Value" },
+        { text: "", value: "" },
+      ],
+    };
+  },
   props: {
     items: {
       type: Array,

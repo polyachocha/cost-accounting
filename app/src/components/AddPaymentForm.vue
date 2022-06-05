@@ -1,17 +1,14 @@
 <template>
-  <div>
-    <button @click="newCost()">Add New Cost +</button>
-    <div class="input" v-show="showInput">
-      <select v-model="category" v-if="categoryList">
-        <option v-for="(value, idx) in categoryList" :key="idx">
-          {{ value }}
-        </option></select
-      ><br />
-      <input placeholder="Value" v-model.number="value" /> <br />
-      <input placeholder="Date" v-model="date" /><br />
-      <button @click="onSaveClick()">Save!</button>
-    </div>
-  </div>
+  <v-card class="pa-8">
+    <v-text-field v-model.number="date" label="Date"></v-text-field>
+    <v-text-field v-model.number="value" label="Value"></v-text-field>
+    <v-select v-model="category" :items="categoryList" label="Category"
+      ><option v-for="(value, idx) in categoryList" :key="idx">
+        {{ value }}
+      </option></v-select
+    >
+    <v-btn color="teal" dark @click="onSaveClick()">Save!</v-btn>
+  </v-card>
 </template>
 
 <script>
@@ -27,7 +24,7 @@ export default {
       date: "",
       id: "",
 
-      showInput: false,
+      showInput: true,
     };
   },
   computed: {
@@ -62,9 +59,9 @@ export default {
         this.$store.commit("addDataToPaymentsList", data);
       }
     },
-    newCost() {
-      this.showInput = !this.showInput;
-    },
+    // newCost() {
+    //   this.showInput = !this.showInput;
+    // },
   },
   async created() {
     await this.$store.dispatch("loadCategories");
