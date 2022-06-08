@@ -9,11 +9,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "@vue/composition-api": "^1.6.2",
     "babel-core": "^7.0.0-bridge.0",
-    "chart.js": "^3.8.0",
+    "chart.js": "^2.7.1",
     "core-js": "^3.8.3",
     "vue": "^2.6.14",
-    "vue-chartjs": "^4.1.1",
+    "vue-chartjs": "^3.4.0",
     "vue-router": "^3.5.3",
     "vuetify": "^2.6.0",
     "vuex": "^3.6.2"

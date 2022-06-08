@@ -14,7 +14,9 @@
         <PaymentsDisplay :items="getPaymentsList" />
         <MyPagination :cur="cur" :length="12" :n="n" @changePage="changePage" />
       </v-col>
-      <v-col> DIAGRAMM </v-col>
+      <v-col>
+        <DoughnutChart :chart-data="getPaymentsList" :options="options" />
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -24,6 +26,15 @@ import AddPaymentForm from "../components/AddPaymentForm.vue";
 import { mapMutations } from "vuex";
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
 import MyPagination from "../components/MyPagination.vue";
+import DoughnutChart from "../components/DoughnutChart.vue";
+
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  animation: {
+    animateRotate: false,
+  },
+};
 
 export default {
   name: "DashboardView",
@@ -31,9 +42,12 @@ export default {
     PaymentsDisplay,
     AddPaymentForm,
     MyPagination,
+    DoughnutChart,
   },
   data() {
     return {
+      options,
+
       dialog: false,
       cur: 1,
       n: 3,

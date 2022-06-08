@@ -1,4 +1,14 @@
 <template>
+  <!-- <v-data-table :headers="headers" :items="items" class="elevation-1">
+    <template v-slot:items="props">
+      <td>{{ props.item.name }}</td>
+      <td class="text-xs-right">{{ props.item.id }}</td>
+      <td class="text-xs-right">{{ props.item.date }}</td>
+      <td class="text-xs-right">{{ props.item.category }}</td>
+      <td class="text-xs-right">{{ props.item.value }}</td>
+      <td class="text-xs-right">{{ props.item.value }}</td>
+    </template>
+  </v-data-table> -->
   <v-container>
     <v-row>
       <v-col :cols="1">#</v-col>
@@ -13,7 +23,7 @@
       <v-col :cols="4">{{ item.category }}</v-col>
       <v-col :cols="2">{{ item.value }}</v-col>
       <v-col :cols="1"
-        ><v-btn @click.native="onContextMenuClick($event, item)"
+        ><v-btn @click.native="onContextMenuClick(item, $event)"
           >...</v-btn
         ></v-col
       >

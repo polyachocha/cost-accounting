@@ -12,6 +12,11 @@ const router = new Router ({
             component: ()=> import(/* webpackChunkName: "PageDashboard "*/'../views/DashboardView.vue'),
         },
         {
+            path: '/',
+            name: 'Dashboard',
+            component: ()=> import(/* webpackChunkName: "PageDashboard "*/'../views/DashboardView.vue'),
+        },
+        {
             path: '/about',
             name: 'PageAbout',
             component: ()=> import(/* webpackChunkName: "PageAbout "*/'../views/PageAbout.vue'),
@@ -25,10 +30,6 @@ const router = new Router ({
             path: '/notfound',
             name: 'NotFound',
             component: ()=> import(/* webpackChunkName: "NotFound "*/'../views/NotFound.vue'),
-        },
-        {
-            path: '*',
-            redirect:'/notfound'
         },
     ]
 })
